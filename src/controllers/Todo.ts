@@ -36,5 +36,34 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateTodo = (req: Request, res: Response, next: NextFunction) => {
-    const todoId = req.params.todoId;
-}
+  const todoId = req.params.todoId;
+
+  return Todo.findById(todoId)
+    .then((todo) => {
+      if (todo) {
+        todo.set(req.body);
+
+        return todo
+          .save()
+          .then((todo) => res.status(201).json({ todo }))
+          .catch((error) => res.status(500).json({ error }));
+      } else {
+        res.status(404).json({ message: "Not found" });
+      }
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
+const deleteTodo = (req: Request, res: Response, next: NextFunction) => {
+  const todoId = req.params.todoId;
+
+  return Todo.findByIdAndDelete(todoId)
+    .then((todo) =>
+      todo
+        ? res.status(201).json({ message: "deleted" })
+        : res.status(404).json({ message: "Not found" })
+    )
+    .catch((error) => res.status(500).json({ error }));
+};
+
+export default { createTodo, readTodo, readAll, updateTodo, deleteTodo };
