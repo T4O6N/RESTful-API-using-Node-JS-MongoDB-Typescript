@@ -1,5 +1,5 @@
 const express = require("express");
-import http from "http";
+const http = require("http");
 import mongoose from "mongoose";
 import { config } from "./config/config";
 import Logging from "./library/Logging";
