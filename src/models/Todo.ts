@@ -10,11 +10,10 @@ export interface ITodoModel extends ITodo, Document {}
 const TodoSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
-    desc: { type: Schema, required: true },
+    desc: { type: String, required: true },
   },
   {
     timestamps: true,
-    versionKey: true,
   }
 );
 
