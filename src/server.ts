@@ -1,11 +1,12 @@
-import experss from "express";
+const express = require("express");
 import http from "http";
 import mongoose from "mongoose";
 import { config } from "./config/config";
 import Logging from "./library/Logging";
 import todoRoutes from "./routes/Todo";
+import { NextFunction, Request, Response } from "express";
 
-const router = experss();
+const router = express();
 
 /* Connect to Mongo */
 mongoose
@@ -21,7 +22,7 @@ mongoose
 
 const StartServer = () => {
   /** Log the request */
-  router.use((req, res, next) => {
+  router.use((req: Request, res: Response, next: NextFunction) => {
     /** Log the req */
     Logging.info(
       `Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
@@ -37,11 +38,11 @@ const StartServer = () => {
     next();
   });
 
-  router.use(experss.urlencoded({ extended: true }));
-  router.use(experss.json());
+  router.use(express.urlencoded({ extended: true }));
+  router.use(express.json());
 
   /* Rules of our API */
-  router.use((req, res, next) => {
+  router.use((req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
@@ -63,12 +64,12 @@ const StartServer = () => {
   router.use("/todos", todoRoutes);
 
   /** Healthcheck */
-  router.get("/ping", (req, res, next) =>
+  router.get("/ping", (req: Request, res: Response, next: NextFunction) =>
     res.status(200).json({ hello: "world" })
   );
 
   /** Error handling */
-  router.use((req, res, next) => {
+  router.use((req: Request, res: Response, next: NextFunction) => {
     const error = new Error("Not found");
 
     Logging.error(error);
