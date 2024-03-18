@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 import { config } from "./config/config";
 import Logging from "./library/Logging";
 import todoRoutes from "./routes/Todo";
@@ -15,7 +15,7 @@ mongoose
     Logging.info("Conneted to mongoDB");
     StartServer();
   })
-  .catch((error) => {
+  .catch((error: Error) => {
     Logging.error("Unable to connect: ");
     Logging.error(error);
   });
