@@ -3,7 +3,7 @@ import http from "http";
 import mongoose from "mongoose";
 import { config } from "./config/config";
 import Logging from "./library/Logging";
-import { expression } from "joi";
+import todoRoutes from "./routes/Todo";
 
 const router = experss();
 
@@ -60,6 +60,7 @@ const StartServer = () => {
   });
 
   /* Routes */
+  router.use("/todos", todoRoutes);
 
   /** Healthcheck */
   router.get("/ping", (req, res, next) =>
