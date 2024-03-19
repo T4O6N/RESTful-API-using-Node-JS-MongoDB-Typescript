@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 import controller from "../controllers/Todo";
 
 const router = express.Router();
