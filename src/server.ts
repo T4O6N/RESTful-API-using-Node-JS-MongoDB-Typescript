@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import { config } from "./config/config";
 import Logging from "./library/Logging";
 import todoRoutes from "./routes/Todo";
-import { NextFunction, Request, Response } from "express";
 
 const router = express();
 
